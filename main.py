@@ -1,77 +1,110 @@
-
-
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
-
 import os
+import sys
+from typing import Annotated, TypedDict
 from dotenv import load_dotenv
-from src.finance_agent import FinanceAgent
+
+# Core LangGraph imports
+from langgraph.graph import StateGraph, END
+from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode
+
+# Standard LangChain imports
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_classic.agents import AgentExecutor, create_structured_chat_agent
-from langchain_core.prompts import PromptTemplate
-
-
+from langchain_core.messages import HumanMessage, SystemMessage
+from src.finance_agent import FinanceAgent
 
 load_dotenv()
 
+# --- 1. DEFINE THE STATE ---
+class AgentState(TypedDict):
+    # This keeps track of all messages in the chat
+    messages: Annotated[list, add_messages]
+
+# --- 2. SETUP TOOLS & MODEL ---
+finance_logic = FinanceAgent()
+tools = [
+    finance_logic.analyze_financial_data,
+    finance_logic.predict_future_spending,
+    finance_logic.create_anomaly_chart
+]
+tool_node = ToolNode(tools)
+
+# Bind the tools to Gemini (The 2026 way)
+model = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash", 
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+).bind_tools(tools)
+
+# --- 3. DEFINE THE LOGIC NODES ---
+def call_model(state: AgentState):
+    """Decides what the AI should do next."""
+    messages = state['messages']
+    response = model.invoke(messages)
+    return {"messages": [response]}
+
+def should_continue(state: AgentState):
+    """Determines if we need to call a tool or finish."""
+    last_message = state['messages'][-1]
+    if not last_message.tool_calls:
+        return "end"
+    return "tools"
+
+# --- 4. BUILD THE GRAPH ---
+workflow = StateGraph(AgentState)
+
+# Add our "stations"
+workflow.add_node("agent", call_model)
+workflow.add_node("tools", tool_node)
+
+# Connect the dots
+workflow.set_entry_point("agent")
+workflow.add_conditional_edges(
+    "agent",
+    should_continue,
+    {
+        "end": END,
+        "tools": "tools"
+    }
+)
+workflow.add_edge("tools", "agent") # After tool runs, go back to agent
+
+# Compile the app
+app = workflow.compile()
+
+# --- 5. INTERACTIVE LOOP ---
 def main():
-    try:
-        api_key = os.getenv("GOOGLE_API_KEY")
-        
-        finance_logic = FinanceAgent()
-        llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=api_key)
-        
-        tools = [
-            finance_logic.analyze_financial_data,
-            finance_logic.predict_future_spending
-        ]
-
+    print("\n--- LangGraph Finance Agent Online ---")
+    print("Type 'exit' to quit.\n")
     
-        template = """Respond to the human as helpfully and accurately as possible. 
-        You have access to the following tools:
-
-
-                {tools}
-
-        Use a json blob to specify a tool by providing an action key (tool name) 
-        and an action_input key (tool input).
-
-        Valid "action" values: "Final Answer" or {tool_names}
-
-        Provide only ONE action per $JSON_BLOB, as shown:
-
-        ```
-        {{
-          "action": "tool name",
-          "action_input": "tool input"
-        }}
-        ```
-
-        Begin!
-
-        Question: {input}
-        Thought: {agent_scratchpad}
-        """
-
-        prompt = PromptTemplate.from_template(template)
+    # Persistent thread for memory (in-memory for now)
+    thread_config = {"configurable": {"thread_id": "1"}}
+    
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ["exit", "quit"]:
+            print("Goodbye!")
+            sys.exit(0)
         
-        # Create the Agent
-        agent = create_structured_chat_agent(llm, tools, prompt)
-        
-        agent_executor = AgentExecutor(
-            agent=agent, 
-            tools=tools, 
-            verbose=True, 
-            handle_parsing_errors=True
-        )
-
-        print("\n--- Agent Online (System Variables Fixed) ---")
-        
-        query = "Analyze 'data/financial_data.csv' and tell me if there are anomalies."
-        agent_executor.invoke({"input": query})
-
-    except Exception as e:
-        print(f"Main Loop Error: {e}")
+        # Stream the response (so you see the "thinking")
+        for event in app.stream(
+            {"messages": [HumanMessage(content=user_input)]},
+            thread_config,
+            stream_mode="updates"
+     ):     
+            for node_name, value in event.items():
+                # We only care about the 'agent' node's text output
+                if node_name == "agent" and "messages" in value:
+                    last_msg = value["messages"][-1]
+                    
+                    # 1. Handle List-style content (The 2026 Gemini Standard)
+                    if isinstance(last_msg.content, list):
+                        for block in last_msg.content:
+                            if isinstance(block, dict) and block.get("type") == "text":
+                                print(f"\nAgent: {block['text']}\n")
+                    
+                    # 2. Handle String-style content (Fallback)
+                    elif isinstance(last_msg.content, str) and last_msg.content:
+                        print(f"\nAgent: {last_msg.content}\n")
 
 if __name__ == "__main__":
     main()
