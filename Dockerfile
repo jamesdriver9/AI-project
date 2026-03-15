@@ -1,27 +1,27 @@
+
 FROM python:3.14-slim
 
-# Set working directory
-WORKDIR /app
-
-# Install system dependencies (needed for Matplotlib and OS interactions)
+# 1. Install Java 21 (The new standard for 2026)
 RUN apt-get update && apt-get install -y \
-    libgl1 \
-    libglib2.0-0 \
+    openjdk-21-jre-headless \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# 2. Set JAVA_HOME (Updated for Java 21)
+# Note: The path changes from '17' to '21'
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
-# Copy the rest of your project
-COPY . .
+# 3. Install PySpark and high-performance data tools
+RUN pip install --no-cache-dir \
+    pyspark \
+    pandas \
+    pyarrow \
+    langchain \
+    langgraph
 
-# Create the data directory if it doesn't exist
-RUN mkdir -p data
+# 4. Set the working directory and copy your code
+WORKDIR /app
+COPY . /app
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-
-# Run the agent
+# Run your agent
 CMD ["python", "main.py"]

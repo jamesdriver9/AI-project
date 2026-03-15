@@ -4,3 +4,7 @@ __pycache__/
 *.png
 *.csv
 .ipynb_checkpoints/
+data/big_financial_data.csv/
+data/*.csv
+.DS_Store
+Thumbs.db
