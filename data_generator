@@ -1,0 +1,19 @@
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+# Initialize Spark
+spark = SparkSession.builder.appName("DataGen").getOrCreate()
+
+# Create 2 million rows (Roughly 1GB of data)
+num_rows = 2_000_000
+
+df = spark.range(0, num_rows).select(
+    F.col("id").alias("transaction_id"),
+    F.expr("uuid()").alias("user_id"),
+    (F.rand() * 1000).alias("amount"),
+    F.expr("date_add('2026-01-01', CAST(rand() * 365 AS INT))").alias("date"),
+    F.expr("CASE WHEN rand() > 0.99 THEN 'Fraud' ELSE 'Legit' END").alias("status")
+)
+
+# Save it to your Docker volume
+df.write.mode("overwrite").csv("data/big_financial_data.csv", header=True)

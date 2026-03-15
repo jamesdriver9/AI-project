@@ -1,11 +1,37 @@
-version: '3.8'
-
 services:
   finance-agent:
     build: .
-    stdin_open: true # Equivalent to -i
-    tty: true        # Equivalent to -t
+    # Use the new Spark-focused file
+    command: python spark_main.py
+    
+    # These two lines are CRITICAL for using input() in Docker
+    stdin_open: true
+    tty: true
+
+    # Memory Management for your 16GB system
+    deploy:
+      resources:
+        limits:
+          memory: 10GB  # Leaves 6GB for Windows/VS Code
+        reservations:
+          memory: 4GB   # Ensures Spark always has at least 4GB to start
+
+    # Sync your data and code between Windows and Docker
     volumes:
+      - ./:/app
       - ./data:/app/data
+
+    # Load your API keys from the .env file
     env_file:
       - .env
+
+    # This ensures Docker doesn't wait forever to turn off
+    stop_grace_period: 1s
+
+    # Advanced Networking (2026 WSL2 Feature)
+    networks:
+      - finance-net
+
+networks:
+  finance-net:
+    driver: bridge
