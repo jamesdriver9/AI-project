@@ -1,12 +1,11 @@
 version: '3.8'
 
 services:
-  finance-agent:          
-    build: .            
-    volumes:             
-      - .:/app           
+  finance-agent:
+    build: .
+    stdin_open: true # Equivalent to -i
+    tty: true        # Equivalent to -t
+    volumes:
       - ./data:/app/data
     env_file:
       - .env
-    stdin_open: true
-    tty: true
