@@ -9,3 +9,12 @@ data/*.csv
 .DS_Store
 Thumbs.db
 Archives
+# Docker files
+.dockerignore
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+
+# YAML Configuration files
+*.yaml
+*.yml

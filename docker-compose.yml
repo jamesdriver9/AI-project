@@ -1,34 +1,39 @@
 services:
   finance-agent:
     build: .
-    # Use the new Spark-focused file
-    command: python spark_main.py
-    
-    # These two lines are CRITICAL for using input() in Docker
-    stdin_open: true
-    tty: true
-
-    # Memory Management for your 16GB system
-    deploy:
-      resources:
-        limits:
-          memory: 10GB  # Leaves 6GB for Windows/VS Code
-        reservations:
-          memory: 4GB   # Ensures Spark always has at least 4GB to start
-
-    # Sync your data and code between Windows and Docker
+    working_dir: /app
+    # Using the standard command for the background engine
+    command: ["python", "llm_agent.py"]
     volumes:
-      - ./:/app
-      - ./data:/app/data  # Read-only access to your data folder
-
-    # Load your API keys from the .env file
+      - ".:/app"
+      - "./data:/app/data" # Removed :ro to allow audit logs to be written
     env_file:
       - .env
+    networks:
+      - finance-net
 
-    # This ensures Docker doesn't wait forever to turn off
-    stop_grace_period: 1s
-
-    # Advanced Networking (2026 WSL2 Feature)
+  ui:
+    build: .
+    working_dir: /app
+    volumes:
+      - ".:/app"
+      - "./data:/app/data"
+    # Optimized 2026 Streamlit Flags: 
+    # 1. Headless=true stops the 10-second "looking for browser" hang
+    # 2. FileWatcher=none prevents Windows-Docker disk lag
+    command: >
+      python -m streamlit run app_ui.py 
+      --server.port 8501 
+      --server.address 0.0.0.0 
+      --server.headless true
+      --server.fileWatcherType none
+      --browser.gatherUsageStats false
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      - finance-agent
     networks:
       - finance-net
 
