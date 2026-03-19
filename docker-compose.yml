@@ -19,7 +19,7 @@ services:
     # Sync your data and code between Windows and Docker
     volumes:
       - ./:/app
-      - ./data:/app/data
+      - ./data:/app/data  # Read-only access to your data folder
 
     # Load your API keys from the .env file
     env_file:

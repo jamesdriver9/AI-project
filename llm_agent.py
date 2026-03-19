@@ -1,119 +1,128 @@
 import os
-import warnings
-import operator
-from typing import Annotated, TypedDict, List
+import json
+from datetime import datetime
 from dotenv import load_dotenv
 
-# 1. SILENCE NOISE & LOAD ENV
-warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_experimental.agents import create_spark_dataframe_agent
+from langgraph.prebuilt import create_react_agent
+from langgraph.checkpoint.memory import MemorySaver
+
 load_dotenv()
 
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langgraph.graph import StateGraph, END
-from langgraph.prebuilt import ToolNode
-from langgraph.types import RetryPolicy
-from langchain_core.messages import BaseMessage, HumanMessage
-from pyspark.sql import SparkSession
-from langchain_experimental.agents import create_spark_dataframe_agent
+# --- 1. SCHEMA GUARD & AUTO-WIPE ---
+FINGERPRINT_PATH = "data/schema_fingerprint.json"
+CHECKPOINT_DB = "checkpoints.sqlite"
 
-# 2. SPARK SETUP
+def sync_schema_and_memory(current_df):
+    """Nukes memory if schema changes (e.g., adding the 'date' column)."""
+    current_columns = current_df.columns
+    old_columns = []
+    
+    if os.path.exists(FINGERPRINT_PATH):
+        try:
+            with open(FINGERPRINT_PATH, "r") as f:
+                old_columns = json.load(f)
+        except: pass
+            
+    if set(current_columns) != set(old_columns):
+        print(f"⚠️ SCHEMA CHANGE: {old_columns} -> {current_columns}")
+        if os.path.exists(CHECKPOINT_DB):
+            os.remove(CHECKPOINT_DB)
+            print("🗑️ Memory wiped to prevent iteration loops.")
+        
+        os.makedirs("data", exist_ok=True)
+        with open(FINGERPRINT_PATH, "w") as f:
+            json.dump(current_columns, f)
+
+# --- 2. DATA SETUP ---
 spark = SparkSession.builder.appName("FinanceAgent").getOrCreate()
-# Assume your 5M row CSV is in the /app/data folder
-df = spark.read.csv("data/big_financial_data.csv", header=True, inferSchema=False)
-df.cache()  # Cache it in memory for faster access during the agent's lifetime
+# Ensure the file exists before reading
+if not os.path.exists("data/financials.parquet"):
+    print("❌ Error: data/financials.parquet not found. Run update_data.py first!")
+    exit(1)
 
-# 3. INTERNAL SPARK WORKER (The "Tool")
-# Use gemini-2.5-flash-lite here if you want to save your "Pro" quota
+df = spark.read.parquet("data/financials.parquet")
+sync_schema_and_memory(df)
+
+# --- 3. THE TOOL (Spark Worker) ---
+# Flash-Lite is cheaper for the "internal" Spark work
 llm_worker = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
+spark_agent = create_spark_dataframe_agent(llm_worker, df, allow_dangerous_code=True)
 
-spark_agent = create_spark_dataframe_agent(
-    llm_worker, 
-    df, 
-    allow_dangerous_code=True,
-    number_of_head_rows=1, # Default is usually 3-5; 1 is enough for the AI
-    include_df_in_prompt=True
-)
 def query_finance_data(user_query: str) -> str:
-    """Queries the 5 million row Spark dataframe."""
-    response = spark_agent.invoke({"input": user_query})
-    return str(response["output"])
+    """
+    USE THIS for all math, data analysis, and schema questions about the financial dataset.
+    This tool has access to the category, amount, and date columns.
+    """
+    # 1. This is where the dynamic 'df.columns' belongs!
+    # It gets sent to the Spark Worker every time the tool is called.
+    prompt = f"Available Data Columns: {df.columns}. User Query: {user_query}"
+    
+    # 2. Execute the spark agent
+    response = spark_agent.invoke({"input": prompt})
+    
+    clean_text = response.get("output", "No data returned.")
+    if isinstance(clean_text, list) and len(clean_text) > 0:
+        clean_text = clean_text[0].get('text', str(clean_text[0]))
 
-tools = [query_finance_data]
+    # Audit Log
+    audit_entry = {
+        "timestamp": datetime.now().isoformat(),
+        "query": user_query,
+        "result": str(clean_text)[:500],
+        "agent": "spark-worker-v1"
+    }
+    
+    with open("data/audit_log.jsonl", "a") as f:
+        f.write(json.dumps(audit_entry) + "\n")
 
-# 4. LANGGRAPH STATE & NODES
-class AgentState(TypedDict):
-    messages: Annotated[List[BaseMessage], operator.add]
+    return str(clean_text)
 
-# --- THE ORCHESTRATOR ---
-# We use the standard Flash here for the "Reasoning"
-model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0).bind_tools(tools)
+# --- 4. THE AGENT (Gemini 2.5 Flash) ---
+model = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash", 
+    temperature=0,
+    thinking_budget=2000 # Tier 1 allows higher reasoning budget
+)
+memory = MemorySaver()
 
-def call_model(state: AgentState):
-    # Only send the last 3 messages to the AI
-    # (The system prompt, the last tool result, and the current question)
-    truncated_messages = state["messages"][-3:] 
-    return {"messages": [model.invoke(truncated_messages)]}
-
-tool_node = ToolNode(tools)
-
-# 5. RETRY POLICY (The Fix for your 429 Error)
-# This tells the graph: "If Google says I'm exhausted, wait 35s and try again."
-gemini_retry_policy = RetryPolicy(
-    retry_on=lambda e: "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e),
-    initial_interval=35.0,  # Replaces wait_min
-    max_interval=65.0,      # Replaces wait_max
-    max_attempts=3,
+# In LangGraph 1.0+, max_iterations is moved to the stream/invoke call
+app = create_react_agent(
+    model, 
+    tools=[query_finance_data], 
+    checkpointer=memory
 )
 
-# 6. BUILD THE GRAPH
-workflow = StateGraph(AgentState)
+# --- 5. RUN LOOP ---
+config = {"configurable": {"thread_id": "tier1_test_session"}, "recursion_limit": 15}
 
-# Add the retry policy specifically to the 'agent' node
-workflow.add_node("agent", call_model, retry=gemini_retry_policy)
-workflow.add_node("tools", tool_node)
+print("\n✅ Finance Agent Online (Tier 1 Limits Active)")
+while True:
+    user_input = input("\nQuery: ").strip()
+    if user_input.lower() in ['exit', 'quit']: break
 
-workflow.set_entry_point("agent")
-
-def should_continue(state: AgentState):
-    if state["messages"][-1].tool_calls:
-        return "tools"
-    return END
-
-workflow.add_conditional_edges("agent", should_continue)
-workflow.add_edge("tools", "agent")
-
-app = workflow.compile()
-
-# 7. MAIN LOOP
-
-if __name__ == "__main__":
-    print("--- LangGraph Finance Agent (v2026.1) ---")
+    print(">>> Thinking...", flush=True)
+    
     try:
-        while True:
-            # Clear the buffer
-            user_input = input("\nQuery (or 'exit'): ").strip()
-            if not user_input: continue
-            if user_input.lower() in ['exit', 'quit']: break
-            
-            print(f">>> Processing: {user_input}") # DEBUG 1
-            
-            inputs = {"messages": [HumanMessage(content=user_input)]}
-            
-            # Using version='v2' for better 2026 streaming support
-            stream_found = False
-            for chunk in app.stream(inputs, stream_mode="values", version="v2"):
-                stream_found = True
-                if "messages" in chunk:
-                    msg = chunk["messages"][-1]
-                    if msg.content:
-                        print(f"\n[Response]: {msg.content}")
-                    elif hasattr(msg, 'tool_calls') and msg.tool_calls:
-                        print("\n[Status]: (Agent is calling Spark...)")
-
-            if not stream_found:
-                print("!!! Error: Graph did not emit any events. Check if 'app' is compiled correctly.")
+        final_usage = None
+        # recursion_limit here replaces 'max_iterations'
+        for chunk, metadata in app.stream(
+            {"messages": [("user", user_input)]}, 
+            config, 
+            stream_mode="messages"
+        ):
+            if metadata.get("langgraph_node") == "agent" and chunk.content:
+                print(chunk.content, end="", flush=True)
                 
-    except KeyboardInterrupt:
-        print("\nStopping agent...")
-    finally:
-        spark.stop()
+            if hasattr(chunk, "usage_metadata") and chunk.usage_metadata:
+                final_usage = chunk.usage_metadata
+
+        if final_usage:
+            print(f"\n{'-'*30}")
+            print(f"📊 Tokens: {final_usage.get('total_tokens')} | Reasoning: {final_usage.get('output_token_details', {}).get('reasoning', 0)}")
+
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
