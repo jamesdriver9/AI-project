@@ -56,42 +56,75 @@ if "thread_id" not in st.session_state:
 
 # --- 3. CORE AGENT LOGIC ---
 async def get_response(user_input):
-    mcp_url = os.getenv("MCP_SERVER_URL", "http://mcp-server:8000/sse")
-    client = MultiServerMCPClient({
-        "finance": {"url": mcp_url, "transport": "sse", "timeout": 60.0}
-    })
+    # 1. Define servers SEPARATELY
+    mcp_configs = {
+        "local_lake": {
+            "url": os.getenv("MCP_SERVER_URL", "http://mcp-server:8000/sse"), 
+            "transport": "sse"
+        }
+    }
 
-    # --- ✨ SLIDING WINDOW MEMORY LOGIC ---
-    # We only grab the last 2 messages (1 User, 1 Assistant) to save tokens
-    # This gives context without sending the entire history
+    # 2. Add Google Drive (Official MCP Server Configuration)
+    key_path = "/app/service_account_key.json"
+    if os.path.exists(key_path):
+        mcp_configs["google_drive"] = {
+            "command": "npx", 
+            # 1. Use the iflow-mcp version (verified on NPM)
+            "args": ["-y", "@iflow-mcp/gdrive-mcp-server"], 
+            "transport": "stdio",
+            "env": {
+                # 2. Most servers look for this standard variable for Service Accounts
+                "GOOGLE_APPLICATION_CREDENTIALS": key_path,
+                "HOME": "/tmp",
+                "PATH": os.environ.get("PATH")
+            }
+        }
+    else:
+        st.sidebar.warning("⚠️ service_account_key.json not found in /app/")
+
+    # --- ✨ SLIDING WINDOW MEMORY ---
     history_context = []
     if len(st.session_state.messages) >= 2:
         last_exchange = st.session_state.messages[-2:]
         for m in last_exchange:
-            # We strip out raw JSON from the history to save even MORE tokens
+            # We strip the raw JSON from history to keep the context window clean
             clean_history = re.sub(r"\[CHART_START\].*?\[CHART_END\]", "[Data Table]", m["content"], flags=re.DOTALL)
             history_context.append((m["role"], clean_history))
 
     dynamic_instructions = (
-        "You are a Data Lake Navigator. Use the provided context from the previous query "
-        "if the user asks a follow-up. For visualizations, output JSON between [CHART_START] and [CHART_END]."
+        "You are a Finance Intelligence Agent. You have access to SQL (local_lake) and Google Drive (google_drive). "
+        "Use 'google_drive' tools to list, read, or write documents. Use 'local_lake' for database queries. "
+        "For visualizations, output JSON between [CHART_START] and [CHART_END]."
     )
     
-    # Construct the message list: System + History (max 2) + Current Input
     payload = [("system", dynamic_instructions)]
     payload.extend(history_context)
     payload.append(("user", user_input))
-    
+
     try:
+        # 3. Create the multi-server client
+        client = MultiServerMCPClient(mcp_configs)
+        
+        # Explicitly pre-fetch tools to ensure both servers (SSE & Stdio) are ready
+        await client.get_tools() 
+        
         agent = await get_agent_app(client)
+        
+        # 4. Agent Execution
         result = await agent.ainvoke(
             {"messages": payload}, 
             {"configurable": {"thread_id": st.session_state.thread_id}, "recursion_limit": 25}
         )
-        final_msg = result["messages"][-1]
-        return parse_and_log_response(final_msg.content)
+        return parse_and_log_response(result["messages"][-1].content)
+
     except Exception as e:
-        return f"❌ **Connection Error:** {str(e)}"
+        # Extraction of detailed errors from TaskGroup sub-exceptions
+        error_msg = str(e)
+        if hasattr(e, 'exceptions'):
+            error_msg = " | ".join([str(sub_e) for sub_e in e.exceptions])
+        
+        logging.error(f"Critical Agent Error: {error_msg}")
+        return f"❌ **Connection Error:** {error_msg}"
 
 # --- 4. UI LAYOUT ---
 st.set_page_config(page_title="Spark Intelligence", layout="wide")
@@ -116,7 +149,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# --- 5. DISPLAY CHAT (THE SINGLE SOURCE OF TRUTH) ---
+# --- 5. DISPLAY CHAT ---
 for i, msg in enumerate(st.session_state.messages):
     avatar = "👤" if msg["role"] == "user" else "🤖"
     with st.chat_message(msg["role"], avatar=avatar):
@@ -132,9 +165,8 @@ for i, msg in enumerate(st.session_state.messages):
                 df_plot = pd.DataFrame(json_lines)
                 
                 if not df_plot.empty:
-                    # User Query is always 1 message back from the chart message
                     user_query = st.session_state.messages[i-1]["content"].lower() if i > 0 else ""
-                    is_line = "line" in user_query or "trend" in user_query
+                    is_line = any(kw in user_query for kw in ["line", "trend", "over time", "monthly"])
                     
                     plot_func = px.line if is_line else px.bar
                     fig = plot_func(
@@ -149,11 +181,11 @@ for i, msg in enumerate(st.session_state.messages):
                 st.warning(f"Chart Render Failed: {e}")
 
 # --- 6. USER INTERACTION ---
-if prompt := st.chat_input("Ask for a chart of total amount by city..."):
+if prompt := st.chat_input("Ask for a chart or a file from Google Drive..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     
     with st.chat_message("assistant", avatar="🤖"):
-        with st.status("🏗️ Analyzing Data Lake...", expanded=True) as status:
+        with st.status("🏗️ Analyzing Sources...", expanded=True) as status:
             try:
                 response = run_async(get_response(prompt))
                 status.update(label="✅ Analysis Complete", state="complete")

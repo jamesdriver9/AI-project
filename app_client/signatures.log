@@ -1384,3 +1384,214 @@ task: <Task pending name='Task-2410' coro=<AsyncClient.aclose() running at /usr/
 2026-03-20 12:03:11,813 - Key 'additionalProperties' is not supported in schema, ignoring
 2026-03-20 12:03:11,813 - Key 'additionalProperties' is not supported in schema, ignoring
 2026-03-20 12:03:12,011 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 404 Not Found"
+2026-03-20 12:03:29,846 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:03:29,849 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=b306994386824ef7961bb15d014130d9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:03:29,850 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=b306994386824ef7961bb15d014130d9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:03:29,852 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=b306994386824ef7961bb15d014130d9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:03:29,869 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:03:29,869 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:03:30,544 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:03:30,546 - Signature Detected: CqoBAb4+9vujQzItAvCnBZcoD42HOTSlFKpnICBDi37fjKOXzqYjqaPz1aN4OJwP2hTIqfXL3bRtN4LnvVFrIjEi4TnYnZ0svKCKNhOMj78sfvHnugr2tI7Rj9gw+OM3G3U2Y3zsGyArw0MFRTn+YTT2mUne93xfwNvR0PXOJhz2vu0GFPS6RZ6z+hmG/7Usk1T2Y2O7fD+mzAUQqaU+3bkIyGVelDOovWh3dIg=
+2026-03-20 12:04:10,927 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:04:10,930 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0787996186ed43b18df285c635f8d027 "HTTP/1.1 202 Accepted"
+2026-03-20 12:04:10,932 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0787996186ed43b18df285c635f8d027 "HTTP/1.1 202 Accepted"
+2026-03-20 12:04:10,934 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0787996186ed43b18df285c635f8d027 "HTTP/1.1 202 Accepted"
+2026-03-20 12:04:10,953 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:04:10,953 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:04:11,865 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:04:11,867 - Signature Detected: CsICAb4+9vsd2eBCQJg7P2kBOhRXb3HBoCxepMp6blXHKyKgPXqX8HL3UH9Re5SDkLOKtl75ZOYLwEycQ+0hkzZYGm65/uZoWWcflczd5mXmaWNm2o40CiNd/FxGyGcfBI+wVXr5Z1mPQkBFESbYeo8aIIwo074ngc2l8RuBI7HhG7ZbYDzz3gAqk+yZFH51SPvvV+fyO4rglSF6PZtjuyflJ5z2KIcmSjIk5gkBFRe3hbVDgC0QY8da/4RDiQ1txqORuiMHfZWkd/i705TUFQsmyIl5EOj15xxeXSgWfeyN8QAbSxLwo0VYQz4wPTPUXcOaG0CdBACYUA5slXyXsztSorVAwGU7FUzvTfrlMJZu6l1KeQtencIWKEj6kNcwritlZslVS+lAlFTsSMgG2bzSnuu9GQssaiR+vpMxmshFapKu2w==
+2026-03-20 12:05:06,807 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:05:06,810 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0d624f4fbb6145a88ea3b1bcac2be1e9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:06,812 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0d624f4fbb6145a88ea3b1bcac2be1e9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:06,813 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0d624f4fbb6145a88ea3b1bcac2be1e9 "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:06,831 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:06,831 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:07,761 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:05:07,773 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:05:07,776 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c2ce0de81fc54583a970c3e63e878a3b "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:07,778 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c2ce0de81fc54583a970c3e63e878a3b "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:07,779 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c2ce0de81fc54583a970c3e63e878a3b "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:07,937 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c2ce0de81fc54583a970c3e63e878a3b "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:07,940 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:07,940 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:08,604 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:05:08,616 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:05:08,619 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ba2aabd1505641f79a0d2c1f34c158be "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:08,621 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ba2aabd1505641f79a0d2c1f34c158be "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:08,622 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ba2aabd1505641f79a0d2c1f34c158be "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:08,746 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ba2aabd1505641f79a0d2c1f34c158be "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:08,749 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:08,750 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:09,756 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:05:09,767 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 12:05:09,770 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=405221fe53624a0cb4cd462ffdb7ac1c "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:09,772 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=405221fe53624a0cb4cd462ffdb7ac1c "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:09,773 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=405221fe53624a0cb4cd462ffdb7ac1c "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:10,134 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=405221fe53624a0cb4cd462ffdb7ac1c "HTTP/1.1 202 Accepted"
+2026-03-20 12:05:10,137 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:10,138 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 12:05:12,073 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 12:05:12,076 - Signature Detected: CrgCAb4+9vtAFcx2TLW0zuuj2qyddKpZ8BGHoIeGQOKOwFSHrdUDbVIvs0M1R14kAYYq5YwGZA/TppzpJAuXHgDv6RSmz0F+OeiyTNLUn7ao+5kWvYLLPn4DkK2h09YX40w3u6tkSB1GKXwSYTNsU79T41wi3E8pAxyeVwKRjOaF3GhVFptoY0UyjSdmu2YuuKO7bI//sLoH0BHzDX8gynUf+CrlgNiz7tGNDoPKQoaZNgfT8nnh0aS8T5BB7+npU31GiIZXtZOD28pUjOB2zzSVlv07qTYTHk6dTjDktZogDTfVWyqYn9f7Pm7cngHFlMQBjAs5+NuEl2E3o/ivWCq8jVbjTK6llSbFgEx+TCdF8+SH88aC0lI/um8C/pwwonH9wreTSuQz9rYyJIuNsBb6+0y1Y63g1JrR
+2026-03-20 15:07:40,578 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 15:07:40,585 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=4ac67e6f10e94d3cbab60dbd2262738f "HTTP/1.1 202 Accepted"
+2026-03-20 15:07:40,590 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=4ac67e6f10e94d3cbab60dbd2262738f "HTTP/1.1 202 Accepted"
+2026-03-20 15:07:40,593 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=4ac67e6f10e94d3cbab60dbd2262738f "HTTP/1.1 202 Accepted"
+2026-03-20 15:07:49,174 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 15:07:49,178 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ac066404d9744ed3bbb5a6671fad207a "HTTP/1.1 202 Accepted"
+2026-03-20 15:07:49,181 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ac066404d9744ed3bbb5a6671fad207a "HTTP/1.1 202 Accepted"
+2026-03-20 15:07:49,182 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ac066404d9744ed3bbb5a6671fad207a "HTTP/1.1 202 Accepted"
+2026-03-20 15:24:53,678 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 15:24:53,683 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c905ae641be24ea5a9c527a7fa5de5cd "HTTP/1.1 202 Accepted"
+2026-03-20 15:24:53,687 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c905ae641be24ea5a9c527a7fa5de5cd "HTTP/1.1 202 Accepted"
+2026-03-20 15:24:53,689 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c905ae641be24ea5a9c527a7fa5de5cd "HTTP/1.1 202 Accepted"
+2026-03-20 15:25:09,220 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 15:25:09,223 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=9e1b2f9270b74dcf9c0ca9dc13986b84 "HTTP/1.1 202 Accepted"
+2026-03-20 15:25:09,225 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=9e1b2f9270b74dcf9c0ca9dc13986b84 "HTTP/1.1 202 Accepted"
+2026-03-20 15:25:09,227 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=9e1b2f9270b74dcf9c0ca9dc13986b84 "HTTP/1.1 202 Accepted"
+2026-03-20 16:10:39,663 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:10:39,667 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=48d496884b6d48dfb92f98264878df37 "HTTP/1.1 202 Accepted"
+2026-03-20 16:10:39,672 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=48d496884b6d48dfb92f98264878df37 "HTTP/1.1 202 Accepted"
+2026-03-20 16:10:39,673 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=48d496884b6d48dfb92f98264878df37 "HTTP/1.1 202 Accepted"
+2026-03-20 16:18:30,264 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:18:30,269 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3724d8648bde4d95b08a7d685284aaa1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:18:30,274 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3724d8648bde4d95b08a7d685284aaa1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:18:30,280 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3724d8648bde4d95b08a7d685284aaa1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:25:57,067 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:25:57,071 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=faf453a0459243c2847945faf38176e1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:25:57,075 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=faf453a0459243c2847945faf38176e1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:25:57,076 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=faf453a0459243c2847945faf38176e1 "HTTP/1.1 202 Accepted"
+2026-03-20 16:25:57,102 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 16:25:57,103 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 16:25:58,208 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 16:25:58,211 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 16:25:58,212 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 16:25:59,096 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 16:25:59,098 - Signature Detected: CpYDAb4+9vt3bzhqhxp/gKhgJrl5mqiFLSejJT7apCdYYPHmcIjrzJLR8s+CeLiACrHUSc/WdfIa9eMShbBENhIon70lxEBJCK5yEdj+49Y54n8eHNhJasVS5ap2yYmgnEOiArjONA6PFTqe5CvPICQFnSDByuC93jdwn0H0iABqxDmdQZyw9BZhm2XFWO2Qd39O3x7so502NyxJVD9DQpF42W1M5Pgb7fcMankNp8lepfr/oCNZLKCJyFZ6H5nYK87tneqKPS1T7fDTqonYbdR12tb1W0qJZzjSHkXvTWKD/sfHEYZHSrNowvIHK6OhBfoFLRlnE21eBqcxSjDZTsrYNg26gy4odsnGZAuJ4z4ixgwLCFelerznAF3lBJnlEslw0oW02xiG14GLfME4C/4qi+BhLMizN1I/XtL7RoCFxz8Ocd8RS+Np40X1zHWjCuBeLY8WBM4Hnll9IDJnTEdOlHagRoUl6kJ+PM7T2sSyPTC9/ZtaUCuYq1cspV+n4zkJ/cstavJELYPVaNESBMNyuHmPRietdA==
+2026-03-20 16:32:58,240 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:32:58,246 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ff15d04c3cbd4b00b87542e82e800ce4 "HTTP/1.1 202 Accepted"
+2026-03-20 16:32:58,250 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ff15d04c3cbd4b00b87542e82e800ce4 "HTTP/1.1 202 Accepted"
+2026-03-20 16:32:58,256 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=ff15d04c3cbd4b00b87542e82e800ce4 "HTTP/1.1 202 Accepted"
+2026-03-20 16:33:10,295 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:33:10,299 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=06d64a8055fc471bb8e37c822cd832e5 "HTTP/1.1 202 Accepted"
+2026-03-20 16:33:10,302 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=06d64a8055fc471bb8e37c822cd832e5 "HTTP/1.1 202 Accepted"
+2026-03-20 16:33:10,303 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=06d64a8055fc471bb8e37c822cd832e5 "HTTP/1.1 202 Accepted"
+2026-03-20 16:37:19,325 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 16:37:19,329 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=651a5be71591455ca2b43e933e0bcb80 "HTTP/1.1 202 Accepted"
+2026-03-20 16:37:19,333 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=651a5be71591455ca2b43e933e0bcb80 "HTTP/1.1 202 Accepted"
+2026-03-20 16:37:19,335 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=651a5be71591455ca2b43e933e0bcb80 "HTTP/1.1 202 Accepted"
+2026-03-20 16:37:21,013 - Critical Agent Error: unhandled errors in a TaskGroup (1 sub-exception)
+2026-03-20 17:12:49,913 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:12:49,917 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3642bc58cedc428abbca011508db97cf "HTTP/1.1 202 Accepted"
+2026-03-20 17:12:49,921 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3642bc58cedc428abbca011508db97cf "HTTP/1.1 202 Accepted"
+2026-03-20 17:12:49,923 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3642bc58cedc428abbca011508db97cf "HTTP/1.1 202 Accepted"
+2026-03-20 17:12:50,744 - Critical Agent Error: unhandled errors in a TaskGroup (1 sub-exception)
+2026-03-20 17:14:08,447 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:14:08,451 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0a364c3802d246ffb6f6dc5a568f5fb3 "HTTP/1.1 202 Accepted"
+2026-03-20 17:14:08,453 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0a364c3802d246ffb6f6dc5a568f5fb3 "HTTP/1.1 202 Accepted"
+2026-03-20 17:14:08,455 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=0a364c3802d246ffb6f6dc5a568f5fb3 "HTTP/1.1 202 Accepted"
+2026-03-20 17:14:15,427 - Critical Agent Error: unhandled errors in a TaskGroup (1 sub-exception)
+2026-03-20 17:15:28,732 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:15:28,735 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=a165975d4b17404ab06ff4cf988a08eb "HTTP/1.1 202 Accepted"
+2026-03-20 17:15:28,739 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=a165975d4b17404ab06ff4cf988a08eb "HTTP/1.1 202 Accepted"
+2026-03-20 17:15:28,740 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=a165975d4b17404ab06ff4cf988a08eb "HTTP/1.1 202 Accepted"
+2026-03-20 17:15:29,535 - Critical Agent Error: unhandled errors in a TaskGroup (1 sub-exception)
+2026-03-20 17:16:30,724 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:16:30,728 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c76be598f6514a91b0ae5c51d4a567b9 "HTTP/1.1 202 Accepted"
+2026-03-20 17:16:30,732 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c76be598f6514a91b0ae5c51d4a567b9 "HTTP/1.1 202 Accepted"
+2026-03-20 17:16:30,733 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c76be598f6514a91b0ae5c51d4a567b9 "HTTP/1.1 202 Accepted"
+2026-03-20 17:16:31,245 - Critical Agent Error: unhandled errors in a TaskGroup (1 sub-exception)
+2026-03-20 17:17:31,076 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:17:31,080 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3874ca1d8757441d93e444711367b340 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:31,084 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3874ca1d8757441d93e444711367b340 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:31,086 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=3874ca1d8757441d93e444711367b340 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:39,729 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:17:39,817 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:17:39,820 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=217b224ef6de4e3c801b56b24a3f6b16 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:39,823 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=217b224ef6de4e3c801b56b24a3f6b16 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:39,824 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=217b224ef6de4e3c801b56b24a3f6b16 "HTTP/1.1 202 Accepted"
+2026-03-20 17:17:40,928 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:17:41,008 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:17:41,008 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:17:41,882 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 17:17:43,087 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:17:43,141 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:17:43,141 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:17:43,704 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 17:18:18,176 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:18:18,179 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c283d732b77b4cc8b9c9994e621a4ef0 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:18,182 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c283d732b77b4cc8b9c9994e621a4ef0 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:18,184 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=c283d732b77b4cc8b9c9994e621a4ef0 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:19,418 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:18:19,476 - HTTP Request: GET http://mcp-server:8000/sse "HTTP/1.1 200 OK"
+2026-03-20 17:18:19,479 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=77bc511aaccf41de8a24130151b42e24 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:19,481 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=77bc511aaccf41de8a24130151b42e24 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:19,482 - HTTP Request: POST http://mcp-server:8000/messages/?session_id=77bc511aaccf41de8a24130151b42e24 "HTTP/1.1 202 Accepted"
+2026-03-20 17:18:20,568 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:18:20,635 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:18:20,636 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:18:21,622 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 17:18:22,808 - Failed to parse JSONRPC message from server
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/mcp/client/stdio/__init__.py", line 155, in stdout_reader
+    message = types.JSONRPCMessage.model_validate_json(line)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pydantic/main.py", line 766, in model_validate_json
+    return cls.__pydantic_validator__.validate_json(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for JSONRPCMessage
+  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='Credentials not found. R... mock mode for testing.', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid
+2026-03-20 17:18:22,858 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:18:22,859 - Key 'additionalProperties' is not supported in schema, ignoring
+2026-03-20 17:18:23,722 - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-03-20 17:18:23,724 - Signature Detected: CqoCAb4+9vvILQQsEswsBadcP+Mn3CO9XIcLI7jSWDdVSG/SsjSzcPzrS0v5HtJ3Bi8VTHlu+h8/+YnZ75ETsjjOKoo/jJe+0LVZw3qVQZJ8xqYEwRUTeqxEIMrc1htXpZkmzj7odLqKErGWZBMmCm8CyqKEeky382fse/NDdnMiFjV2fn/2D9fNuh73p9JWImoPK0IBrMDJFNnK3DiU6B7qYYX1XTueehJkCXPRW2NOTgfARQmDYMV0vCgvz2Hoy7CyTcDMcSlEtayn7kxOlr+OJHo2yEULYk0+zkFw+ECNVmuJ340qwbGLe68/kUwyHMLtFuspYb13ORYRZiLcRM+rX64ZnxWdGDT0ECvGItXqLnbmRvfd3niTjOYpa4wDI68NjXbSWhuytPofnQ==

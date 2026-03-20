@@ -1,0 +1,18 @@
+FROM node:18-slim
+
+# Create app directory
+WORKDIR /app
+
+# Install the MCP server globally inside the container
+RUN npm install -g @piotr-agier/google-drive-mcp
+
+# We don't COPY the tokens! 
+# In the cloud, we pass them as Environment Variables for security.
+# But for testing, you can mount them like we did in local.
+
+# Cloud Run requires the app to listen on a specific PORT (usually 8080)
+ENV PORT=8080
+
+# Start the server in SSE mode (Server-Sent Events)
+# This is what allows the cloud UI to talk to this container
+ENTRYPOINT ["google-drive-mcp", "sse"]
