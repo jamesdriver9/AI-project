@@ -18,3 +18,20 @@ docker-compose.override.yml
 # YAML Configuration files
 *.yaml
 *.yml
+
+
+# Google Cloud Secrets
+*.json
+
+# Local Database
+*.db
+
+# Python & Environment
+__pycache__/
+*.pyc
+.env
+.venv
+.streamlit/secrets.toml
+
+# Docker logs
+*.log

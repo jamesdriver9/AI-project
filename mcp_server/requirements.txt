@@ -1,0 +1,7 @@
+fastmcp>=0.4.1
+pyspark==3.5.0
+pandas
+pyarrow
+python-dotenv
+uvicorn
+starlette
