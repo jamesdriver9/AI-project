@@ -3,3 +3,5 @@ langchain-google-genai
 langchain-mcp-adapters
 langgraph
 python-dotenv
+pandas
+plotly
